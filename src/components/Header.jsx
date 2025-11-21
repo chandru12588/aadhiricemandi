@@ -6,6 +6,7 @@ import logo from "../assets/logo.jpg";
 export default function Header() {
   const [showCart, setShowCart] = useState(false);
   const [dark, setDark] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleDark = () => {
     setDark(!dark);
@@ -15,19 +16,12 @@ export default function Header() {
 
   return (
     <header className="bg-white dark:bg-[#041424] shadow sticky top-0 z-50">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between p-4">
-        {/* Logo + Site Name */}
-        <div className="flex items-center gap-3 mb-3 md:mb-0">
-          <img
-            src={logo}
-            alt="logo"
-            className="w-12 h-12 rounded-md object-cover"
-          />
+      <div className="container mx-auto flex items-center justify-between p-4">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <img src={logo} alt="logo" className="w-12 h-12 rounded-md object-cover" />
           <div>
-            <Link
-              to="/"
-              className="text-2xl font-bold text-green-700 dark:text-green-300"
-            >
+            <Link to="/" className="text-2xl font-bold text-green-700 dark:text-green-300">
               Sivam Rice Mandi
             </Link>
             <div className="text-sm text-gray-600 dark:text-gray-300">
@@ -36,64 +30,51 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Navigation + Buttons */}
-        <div className="flex items-center gap-3">
-          {/* Navigation Links */}
-          <nav className="hidden md:flex gap-3">
-            <Link
-              to="/"
-              className="text-gray-800 dark:text-gray-200 hover:text-green-600"
-            >
-              Home
-            </Link>
-            <Link
-              to="/products"
-              className="text-gray-800 dark:text-gray-200 hover:text-green-600"
-            >
-              Products
-            </Link>
-            <Link
-              to="/contact"
-              className="text-gray-800 dark:text-gray-200 hover:text-green-600"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/brands"
-              className="text-gray-800 dark:text-gray-200 hover:text-green-600"
-            >
-              Brands
-            </Link>
-            <Link
-              to="/reviews"
-              className="text-gray-800 dark:text-gray-200 hover:text-green-600"
-            >
-              Reviews
-            </Link>
+        {/* Desktop Links + Dark Mode + Cart */}
+        <div className="hidden md:flex items-center gap-3">
+          <nav className="flex gap-3 items-center">
+            <Link to="/" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Home</Link>
+            <Link to="/products" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Products</Link>
+            <Link to="/contact" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Contact</Link>
+            <Link to="/brands" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Brands</Link>
+            <Link to="/reviews" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Reviews</Link>
           </nav>
-
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleDark}
-            className="px-3 py-2 rounded bg-gray-100 dark:bg-[#082033]"
-          >
+          <button onClick={toggleDark} className="px-3 py-2 rounded bg-gray-100 dark:bg-[#082033]">
             {dark ? "Light" : "Dark"}
           </button>
-
-          {/* Cart Button */}
-          <button
-            onClick={() => setShowCart(true)}
-            className="relative px-3 py-2 rounded bg-green-600 text-white"
-          >
+          <button onClick={() => setShowCart(true)} className="px-3 py-2 rounded bg-green-600 text-white">
             🛒 Cart
           </button>
         </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden px-3 py-2 border rounded ml-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </div>
 
-      {/* Mobile Nav */}
-      <div className="md:hidden flex justify-between items-center px-4 pb-2">
-        {/* You can add a hamburger menu here if needed */}
-      </div>
+      {/* Mobile Navigation */}
+      {menuOpen && (
+        <nav className="md:hidden bg-white dark:bg-[#041424] px-4 pb-4 flex flex-col gap-2 border-t border-gray-200 dark:border-gray-700">
+          <Link to="/" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/products" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Products</Link>
+          <Link to="/contact" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Contact</Link>
+          <Link to="/brands" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Brands</Link>
+          <Link to="/reviews" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Reviews</Link>
+          {/* Mobile Dark Mode + Cart */}
+          <div className="flex gap-2 mt-2">
+            <button onClick={toggleDark} className="px-3 py-2 rounded bg-gray-100 dark:bg-[#082033] w-full">
+              {dark ? "Light" : "Dark"}
+            </button>
+            <button onClick={() => setShowCart(true)} className="px-3 py-2 rounded bg-green-600 text-white w-full">
+              🛒 Cart
+            </button>
+          </div>
+        </nav>
+      )}
 
       {/* Cart Modal */}
       {showCart && <Cart onClose={() => setShowCart(false)} />}
