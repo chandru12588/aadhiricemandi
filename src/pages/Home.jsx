@@ -80,7 +80,7 @@ export default function Home() {
           Contact & Location
         </h2>
         <p className="mt-2">
-          Sivam Rice Mandi
+         ஆதி அரிசி அங்காடி (Aadhi Arisi Angaadi)
           <br />
           Wholesale & Retail
         </p>

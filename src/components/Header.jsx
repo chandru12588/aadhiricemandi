@@ -22,7 +22,7 @@ export default function Header() {
           <img src={logo} alt="logo" className="w-12 h-12 rounded-md object-cover" />
           <div>
             <Link to="/" className="text-2xl font-bold text-green-700 dark:text-green-300">
-              Sivam Rice Mandi
+              ஆதி அரிசி அங்காடி (Aadhi Arisi Angaadi)
             </Link>
             <div className="text-sm text-gray-600 dark:text-gray-300">
               Wholesale & Retail • Traditional Rice Varieties
