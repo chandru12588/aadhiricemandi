@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import Cart from "./Cart";
 
 export default function Header({ openCart }) {
   const [dark, setDark] = useState(false);
