@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Cart from "./Cart.jsx";
 import logo from "../assets/logo.jpg";
 
-export default function Header() {
-  const [showCart, setShowCart] = useState(false);
+export default function Header({ openCart }) {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -17,6 +15,7 @@ export default function Header() {
   return (
     <header className="bg-white dark:bg-[#041424] shadow sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
+        
         {/* Logo */}
         <div className="flex items-center gap-3">
           <img src={logo} alt="logo" className="w-12 h-12 rounded-md object-cover" />
@@ -30,7 +29,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Desktop Links + Dark Mode + Cart */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-3">
           <nav className="flex gap-3 items-center">
             <Link to="/" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Home</Link>
@@ -39,10 +38,16 @@ export default function Header() {
             <Link to="/brands" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Brands</Link>
             <Link to="/reviews" className="text-gray-800 dark:text-gray-200 hover:text-green-600">Reviews</Link>
           </nav>
+
           <button onClick={toggleDark} className="px-3 py-2 rounded bg-gray-100 dark:bg-[#082033]">
             {dark ? "Light" : "Dark"}
           </button>
-          <button onClick={() => setShowCart(true)} className="px-3 py-2 rounded bg-green-600 text-white">
+
+          {/* Cart Button */}
+          <button
+            onClick={openCart}
+            className="px-3 py-2 rounded bg-green-600 text-white"
+          >
             🛒 Cart
           </button>
         </div>
@@ -58,26 +63,31 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {menuOpen && (
-        <nav className="md:hidden bg-white dark:bg-[#041424] px-4 pb-4 flex flex-col gap-2 border-t border-gray-200 dark:border-gray-700">
-          <Link to="/" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/products" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Products</Link>
-          <Link to="/contact" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Contact</Link>
-          <Link to="/brands" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Brands</Link>
-          <Link to="/reviews" className="block text-gray-800 dark:text-gray-200" onClick={() => setMenuOpen(false)}>Reviews</Link>
+        <nav className="md:hidden bg-white dark:bg-[#041424] px-4 pb-4 flex flex-col gap-2 border-t">
+          <Link to="/" onClick={() => setMenuOpen(false)} className="text-gray-800 dark:text-gray-200">Home</Link>
+          <Link to="/products" onClick={() => setMenuOpen(false)} className="text-gray-800 dark:text-gray-200">Products</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)} className="text-gray-800 dark:text-gray-200">Contact</Link>
+          <Link to="/brands" onClick={() => setMenuOpen(false)} className="text-gray-800 dark:text-gray-200">Brands</Link>
+          <Link to="/reviews" onClick={() => setMenuOpen(false)} className="text-gray-800 dark:text-gray-200">Reviews</Link>
+
           {/* Mobile Dark Mode + Cart */}
           <div className="flex gap-2 mt-2">
             <button onClick={toggleDark} className="px-3 py-2 rounded bg-gray-100 dark:bg-[#082033] w-full">
               {dark ? "Light" : "Dark"}
             </button>
-            <button onClick={() => setShowCart(true)} className="px-3 py-2 rounded bg-green-600 text-white w-full">
+
+            <button
+              onClick={() => {
+                openCart();
+                setMenuOpen(false);
+              }}
+              className="px-3 py-2 rounded bg-green-600 text-white w-full"
+            >
               🛒 Cart
             </button>
           </div>
         </nav>
       )}
-
-      {/* Cart Modal */}
-      {showCart && <Cart onClose={() => setShowCart(false)} />}
     </header>
   );
 }
