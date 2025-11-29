@@ -23,7 +23,7 @@ export default function Cart({ onClose }) {
     }
     const lines = cart.map((p, idx) => `${idx + 1}. ${p.name} x${p.qty} - ₹${p.price * p.qty}`);
     lines.push(`Total: ₹${total}`);
-    const message = `Hello Sivam Rice Mandi,%0AI'd like to place an order:%0A${lines.join("%0A")}%0A%0AName:%0AAddress:%0AContact:`;
+    const message = `Hello Aadhi Arisi Angaadi,%0AI'd like to place an order:%0A${lines.join("%0A")}%0A%0AName:%0AAddress:%0AContact:`;
     const phone = "918220220300";
     const url = `https://wa.me/${phone}?text=${message}`;
     window.open(url, "_blank");
